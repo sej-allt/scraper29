@@ -41,7 +41,8 @@ app.get('/scrape', async (req, res) => {
   try {
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
-    await page.goto(scrapeUrl); // Use the hardcoded URL here
+    await page.goto(`http://api.scraperapi.com?api_key=360b80f6bfee27a72d50f01bf909ad8c&url=${encodeURIComponent(scrapeUrl)}`);
+    // await page.goto(scrapeUrl); // Use the hardcoded URL here
 
     // Example scraping logic
     const title = await page.title();
