@@ -1,5 +1,8 @@
 const express = require('express');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+
+puppeteer.use(StealthPlugin());
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,17 +13,10 @@ app.get('/', (req, res) => {
   res.send('Hello, this is your scraper app!');
 });
 
-const scraperApiKey = '360b80f6bfee27a72d50f01bf909ad8c'; // Replace with your ScraperAPI key
-const scraperapiUrl = `http://api.scraperapi.com?api_key=${scraperApiKey}&url=`;
+const scrapeUrl = 'https://en.wikipedia.org/wiki/Virat_Kohli';
 
 // Define route for scraping endpoint using GET method
 app.get('/scrape', async (req, res) => {
-  const scrapeUrl = req.query.url; // Retrieve URL from query parameter
-
-  if (!scrapeUrl) {
-    return res.status(400).json({ error: 'URL not provided' });
-  }
-
   try {
     const result = await scrapeWithPuppeteer(scrapeUrl);
     res.json(result);
@@ -34,7 +30,7 @@ async function scrapeWithPuppeteer(url) {
   try {
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
-    await page.goto(`${scraperapiUrl}${url}`); // Use ScraperAPI URL to bypass restrictions
+    await page.goto(url);
 
     // Example scraping logic
     const title = await page.title();
