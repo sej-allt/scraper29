@@ -1,0 +1,8 @@
+[build]
+  functions = "functions" # Directory containing your Netlify functions
+  command = "npm install" # Command to install dependencies
+
+[[redirects]]
+  from = "/scrape"
+  to = "/.netlify/functions/scrape"
+  status = 200

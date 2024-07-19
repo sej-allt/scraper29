@@ -1,16 +1,20 @@
 {
-  "name": "scrape29",
+  "name": "my-scraper",
   "version": "1.0.0",
-  "description": "A web scraper using Puppeteer and Express",
+  "description": "A web scraper using Puppeteer deployed on Netlify",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "netlify dev", 
+    "build": "echo 'No build step required'",
+    "postinstall": "npm install" 
   },
   "dependencies": {
-    "express": "^4.17.3",
-    "puppeteer": "^22.13.1"
+    "puppeteer": "^22.13.1" 
   },
   "engines": {
-    "node": "18.x"
+    "node": ">=16" 
+  },
+  "netlify": {
+    "functions": "functions" 
   }
 }
